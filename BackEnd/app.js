@@ -1,5 +1,5 @@
 const express = require('express')
-const bodyParser=require('body-parser')
+const bodyParser = require('body-parser')
 const mongodb = require('./mongodbconnect')
 const employeedetails = require('./models/employee')
 
@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.post("/employeeDetailsInsert", function (req, res) {
-    employeedetailsinsert={
+    employeedetailsinsert = {
         empname: req.body.empname,
         empid: req.body.empid,
         empage: req.body.empage,
@@ -37,7 +37,7 @@ app.post("/employeeDetailsInsert", function (req, res) {
         salary: req.body.salary
     }
 
-    employeedetails.create(employeedetailsinsert,function (err, result) {
+    employeedetails.create(employeedetailsinsert, function (err, result) {
         if (err) {
             res.send(false)
         } else {

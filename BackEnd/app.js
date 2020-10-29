@@ -50,4 +50,9 @@ app.get('/employeeDetail', function (req, res) {
         res.send(result)
     })
 })
+app.get('/employeeDetailsEdit', function (req, res) {
+    employeedetails.findOne({_id:req.query.empid},function (err, result) {
+        res.send(result)
+    })
+})
 app.listen(3000);

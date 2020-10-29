@@ -45,11 +45,9 @@ app.post("/employeeDetailsInsert", function (req, res) {
         }
     })
 })
-
-
-
-
-
-
-
+app.get('/employeeDetail', function (req, res) {
+    employeedetails.find(function (err, result) {
+        res.send(result)
+    })
+})
 app.listen(3000);

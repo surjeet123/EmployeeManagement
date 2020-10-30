@@ -1,34 +1,51 @@
 
 $(document).ready(function () {
-    var empid = employeeUtilities.getParameterByName('empid');
-    $.ajax({
-        url:"http://localhost:3000/employeeDetailsEdit/?empid="+empid,
-        type:"GET",
-        complete:function(result){
-                $("#empname").val(result.responseJSON.empname)
-                $("#empID").val(result.responseJSON.empid)
-                $("#age").val(result.responseJSON.empage)
-                $("#gender").val(result.responseJSON.empgender)
-                $("#fathersname").val(result.responseJSON.fathersname)
-                $("#mothersname").val(result.responseJSON.mothersname)
-                $("#address").val(result.responseJSON.address)
-                $("#experience").val(result.responseJSON.yearsofexperience)
-                $("#lastcompany").val(result.responseJSON.lastcompany)
-                $("#salary").val(result.responseJSON.salary)
+    var empid = GeneralUtilities.getParameterByName('id');
+    var ResultModel = GeneralUtilities.AjaxSuccessReturn("http://localhost:3000/employeeDetailsEdit/?id=" + empid, "GET", {})
+    ResultModel.then(function (result) {
+        $("#empname").val(result.empname)
+        $("#empID").val(result.empid)
+        $("#age").val(result.empage)
+        $("#gender").val(result.empgender)
+        $("#fathersname").val(result.fathersname)
+        $("#mothersname").val(result.mothersname)
+        $("#address").val(result.address)
+        $("#experience").val(result.yearsofexperience)
+        $("#lastcompany").val(result.lastcompany)
+        $("#salary").val(result.salary)
+        $("#hdnforid").val(result._id)
+    })
 
+
+    $("#btnsubmit").click(function () {
+
+        var employee = {
+            empname: $("#empname").val(),
+            empid: $("#empID").val(),
+            empage: $("#age").val(),
+            empgender: $("#gender").val(),
+            fathersname: $("#fathersname").val(),
+            mothersname: $("#mothersname").val(),
+            address: $("#address").val(),
+            experience: $("#experience").val(),
+            lastcompany: $("#lastcompany").val(),
+            salary: $("#salary").val(),
+            id: $('#hdnforid').val()
         }
+        var ResultModel = GeneralUtilities.AjaxSuccessReturn("http://localhost:3000/employeedetailupdate", 'POST', employee);
+        ResultModel.then(function (result) {
+            if (result) {
+                alert("record saved successfully");
+                $('input[type="text"]').val('')
+                $("#hdnforid").val(0)
+            } else {
+                alert("record not saved");
+
+            } 
+           
+
+        })
+
     })
 });
 
-
-employeeUtilities={
-getParameterByName:function(name){
-    var url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-}

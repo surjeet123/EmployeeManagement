@@ -1,5 +1,5 @@
-
 $(document).ready(function () {
+    // ==================================employee details get in the text box==========================================================
     var empid = GeneralUtilities.getParameterByName('id');
     var ResultModel = GeneralUtilities.AjaxSuccessReturn("http://localhost:3000/employeeDetailsEdit/?id=" + empid, "GET", {})
     ResultModel.then(function (result) {
@@ -15,8 +15,8 @@ $(document).ready(function () {
         $("#salary").val(result.salary)
         $("#hdnforid").val(result._id)
     })
-
-
+    // ==========================END====================================================================================================================
+    // ===================================employee details insert=======================================================================================
     $("#btnsubmit").click(function () {
 
         var employee = {
@@ -41,11 +41,28 @@ $(document).ready(function () {
             } else {
                 alert("record not saved");
 
-            } 
-           
+            }
+
 
         })
 
     })
+    // ==========================================END=========================================================================================
+    var empleavedetails = GeneralUtilities.AjaxSuccessReturn("http://localhost:3000/employeeleavedetails", "GET", {})
+    empleavedetails.then(function (result) {
+        var details = ""
+        $.each(result, function (i, v) {
+            details += "<tr>"
+            if (v.empid != undefined)
+                details += "<td>" + v.empid.empname + "</td>";
+            else
+                details += "<td></td>";
+            details += "<td>" + v.leavefrom + "</td>"
+            details += "<td>" + v.leaveto + "</td>"
+            details += "</tr>"
+        })
+        $('.table').find("tbody").html(details)
+    })
+
 });
 

@@ -61,7 +61,7 @@ $(document).ready(function () {
         var employeeDetailsByid = GeneralUtilities.AjaxSuccessReturn("http://localhost:3000/employeedetailsbyempid?empid=" + empid, "GET", {})
         employeeDetailsByid.then(function (result) {
             var emplabel = "<label class='empid' id='" + result._id + "'>" + result.empname + "</label>"
-
+            $('#dvLeaveSection').show();
             $("#empname").html(emplabel)
         })
 
@@ -81,18 +81,19 @@ $(document).ready(function () {
         employeeDetails.then(function (result) {
             if (result) {
                 alert("record saved")
-                $("input[type='text'],[type='date']").val("")
-                $("#empname").html('')
-                
-
+                $("input[type='text'],[type='date']").val("");
+                $("#empname").html('');
+                $('#dvLeaveSection').hide();
+                window.location.href = "/employeeleave.html";
             } else {
                 alert("record not saved")
             }
+
         })
     })
     // ======================================END===================================================================================================
-
-
+    // ====================================emp leave details========================================================================================
+    
 
 
 

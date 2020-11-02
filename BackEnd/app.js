@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const mongodb = require('./mongodbconnect')
 const employeeRoutes = require('./routes/employee');
 const leaveRoutes = require('./routes/employeeleave');
-
+const empSalaryRoutes=require('./routes/employeeSalary')
 const app = express();
 app.use((req, res, next) => {
     res.header('Access-control-allow-origin', '*')
@@ -23,5 +23,6 @@ app.use(bodyParser.json());
 
 app.use('/', employeeRoutes);
 app.use('/leave', leaveRoutes);
+app.use('/salary',empSalaryRoutes);
 
 app.listen(3000);

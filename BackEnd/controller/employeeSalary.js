@@ -14,7 +14,7 @@ const empsalary = function (req, res) {
     })
 }
 const ShowAllEmpSalary = function (req, res) {
-    employeeSalary.find(function (err, result) {
+    employeeSalary.find({}).populate('empname', 'empname').exec(function (err, result) {
         res.send(result)
     })
 }

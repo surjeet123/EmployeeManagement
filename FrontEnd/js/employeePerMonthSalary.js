@@ -6,11 +6,11 @@ $(document).ready(function(){
         $.each(result,function(i,v){
             details += "<tr>"
             if (v.empname != undefined)
-                details += "<td>" + v.empname.empname + "</td>";
+                details += "<td class='id' value='"+v.empname._id+"'>" + v.empname.empname + "</td>";
             else
                 details += "<td></td>";
             details += "<td><input type='text' class='empSalary' value='"+v.salary+"'></td>"
-            details += "<td> <input type='button' class='editdetails' value='save' id='" + v._id + "'></td>"
+            details += "<td> <input type='button' class='editdetails' value='save'></td>"
             details += "</tr>"
         })
         $('.table').find("tbody").html(details)
@@ -21,19 +21,17 @@ $(document).ready(function(){
    
         $('body').on('click','.editdetails',function(){
             const empSalary = {
-                empname: $(this).attr('id'),
+                empname: $('.id').attr('value'),
                 salary: $('.empSalary').val(),
                 month: $('#dropdownStaticMonth option:selected').val()
             }
             const SalaryModel = GeneralUtilities.AjaxSuccessReturn('http://localhost:3000/salary/Insertempsalary', 'POST', empSalary);
             SalaryModel.then(function (result) {
-                if (result) {
-                    alert('record saved successfully')
-                    $("input[type='text']").val("");
-                } else {
-                    alert('record not saved')
-                }
-            })
+                $(".empSalary").val("");
+            })      
+                 
+             
+            
         })
     
 

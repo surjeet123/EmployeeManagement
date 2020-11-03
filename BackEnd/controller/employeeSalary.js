@@ -18,8 +18,20 @@ const ShowAllEmpSalary = function (req, res) {
         res.send(result)
     })
 }
+const getDetailsTextboxModel = function (req, res) {
+    employeeSalary.findOne({ _id: req.query.id }).populate('empname').exec(function (err, result) {
+        res.send(result)
+    })
+}
+const updateEmpSalary = function (req, res) {
+    employeeSalary.updateOne({ _id: req.body.id }, { salary: req.body.salary, month: req.body.month }, function (err, result) {
+        res.send(result)
+    })
+}
 
 module.exports = {
     empsalary,
-    ShowAllEmpSalary
+    ShowAllEmpSalary,
+    getDetailsTextboxModel,
+    updateEmpSalary
 }

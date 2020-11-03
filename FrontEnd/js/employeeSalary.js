@@ -25,15 +25,15 @@ $(document).ready(function () {
                 $("input[type='text']").val("");
                 $("#empname").html('');
                 $('#dvLeaveSection').hide();
-                window.location.href='/EmpShowSalary.html'
-                
+                window.location.href = '/EmpShowSalary.html'
+
             } else {
                 alert('record not saved')
             }
         })
     })
-    // =============================================END============================================================================================
-    //-------------------------------------SHOW-EMPLOYEE-SALARY=================================================================================
+    // ======================================================END============================================================================================
+    //------------------------------------------------SHOW-EMPLOYEE-SALARY=================================================================================
     var empSalaryModel = GeneralUtilities.AjaxSuccessReturn("http://localhost:3000/salary/showallempdetails", "GET", {})
     empSalaryModel.then(function (result) {
         var details = ""
@@ -45,9 +45,25 @@ $(document).ready(function () {
                 details += "<td></td>";
             details += "<td>" + v.salary + "</td>"
             details += "<td>" + v.month + "</td>"
+            details += "<td> <input type='button' class='editdetails' value='edit salary' id='" + v._id + "'></td>"
             details += "</tr>"
         })
         $('.table').find("tbody").html(details)
     })
-    //============================================END============================================================================================
+    //==============================================================END============================================================================================
+    //----------------------------------------------------GET-EMP-DETAILS-IN-TEXTBOX---------------------------------------------------------------------
+    $('body').on('click', '.editdetails', function () {
+        var id = $(this).attr('id')
+        var getDetailstextboxModel = GeneralUtilities.AjaxSuccessReturn('http://localhost:3000/salary/getdetailsintextbox?id=' + id, 'GET', {})
+        getDetailstextboxModel.then(function (result) {
+            $('#empname').val(result.empname.empname)
+            $('#empsalary').val(result.salary);
+            $('#empsalmonth').val(result.month);
+        })
+    })
+    // ===========================================================END=====================================================================================
+    // ------------------------------------------------------UPDATE-EMPLOYEE-SALARY--------------------------------------------------------------
+
+
+
 })
